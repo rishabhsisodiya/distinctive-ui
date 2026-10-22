@@ -73,16 +73,64 @@ Without a browser, it reviews the code and asks you for screenshots.
 
 ## Use
 
-Just describe what you want. The skill triggers on design requests:
+Just describe what you want. The skill triggers on design requests, even if you don't name it. Or call
+it directly: `/distinctive-ui:distinctive-ui`.
+
+### Example prompts
+
+**Start a new design**
 
 - "Redesign our clinic booking dashboard. It looks like every other template."
 - "Design the first screen of a field-technician app for checking in at a site."
-- "Give me three art directions for our invoicing tool's home page."
+- "We're building an invoicing tool for small shops. I want it to feel like nothing else on the market."
+- "Make our admin panel less generic. The people using it are warehouse supervisors on tablets."
 
-Or call it directly: `/distinctive-ui:distinctive-ui`.
+**Redesign something that already exists**
+
+- "Redesign the checkout page in this repo. Keep the existing React components, but give it a real identity."
+- "Here's my prototype in `prototype/index.html`. Run the full design process on it and build a new version next to it."
+- "Our dashboard works but looks like a template. Find what's generic about it and propose three alternatives."
+
+**Skip straight to the part you need**
+
+- "Skip the questions, I'll give you the brief: [paste]. Go to the three art directions."
+- "Give me three art directions for our order-tracking screen: layout, type, colours and one signature interaction each."
+- "We already picked direction B. Build the mobile screen for the delivery rider first."
+- "Review what you built in a real browser at desktop and phone size and list the five worst visual problems."
+
+**Control the pace**
+
+- "You decide" — it picks an answer, marks it as an ASSUMPTION and tells you why.
+- "Go with your suggestion" — accepts its recommendation and moves on.
+- "Just build it, don't stop between phases" — runs the remaining build steps back to back and reports at the end.
+- "Wait, change the brief: the installers also need to work offline" — it updates the brief and carries on from there.
+
+**Longer, realistic prompt**
+
+> I run a small chain of laundromats. Staff use a tablet at the counter all day: they take in a bag,
+> tag it, quote a price by weight, and tell customers when it's ready. Customers get a WhatsApp
+> message. Design the staff screen — it should feel like our shop's paper ticket book, not a
+> dashboard. Prices are in ₹, names are mixed English and Hindi. Build it as a single HTML prototype
+> I can click through.
+
+### What happens next
+
+1. It checks your project for context, then asks a short set of numbered questions (Round A) and
+   stops for your answers. Then a second round (Round B), pre-filled with what it already knows.
+2. It writes a brief of 10 lines or fewer and stops. Reply "confirmed" or send corrections.
+3. It proposes three genuinely different art directions with a trade-off table and a recommendation.
+   Reply with a letter, or a mix like "A with C's header".
+4. It builds, in sessions of about one working step each, then checks the result in a real browser and
+   fixes the five worst problems.
+5. It finishes with an honest handover: what was tested, what wasn't, and what a backend must provide.
 
 It stops after each phase for your answer. Say **"you decide"** and it chooses, labelling the choice
 as an ASSUMPTION. Say **"just build it"** and it runs the remaining build steps without stopping.
+
+### Not for
+
+Quick code reviews of existing UI (use `apple-design` or `ui-ux-pro-max` directly), logos, banners,
+slides, or video.
 
 ## What's inside
 
