@@ -21,22 +21,33 @@ vocabulary, colour and one signature interaction all come from the product's own
 Run the phases below. Each phase ends at a **stop point** where you wait for the user — unless they
 tell you to skip ahead (see "Pace").
 
-## Before anything: load the design skills
+## Before anything: check and load the design skills
 
-1. Load `design-orchestrator` (bundled with this plugin; it may appear as
-   `distinctive-ui:design-orchestrator`). If the user also has a personal `design-orchestrator`,
-   theirs wins — it reflects their own setup.
-2. Follow its routing:
+The two helper skills are optional installs, so first find out what this user already has — someone
+who keeps `ui-ux-pro-max` in `~/.claude/skills/` should never get a second copy.
+
+1. **Detect.** Run `node <this skill's base directory>/scripts/check-helpers.mjs` (read-only; prints
+   JSON). For `ui-ux-pro-max` and `apple-design` it reports where each was found: personal
+   (`~/.claude/skills`), project (`.claude/skills`), or an enabled plugin. Also trust the session's
+   skill list: a helper listed there (with or without a plugin prefix) is available even if the script
+   didn't find it. If `node` or the `claude` CLI isn't available, rely on the skill list alone.
+2. **Found → use it, say nothing.** Do not ask, do not install.
+3. **Missing → ask once per helper**, in plain words: what it adds, where it comes from (the `source`
+   field), and that it installs as a plugin. Install only after a clear yes, with the script's
+   `installCommand`, then tell the user to type `/reload-plugins`. If they say no, don't ask again
+   this session. Never install silently — it changes their setup.
+4. **Until a helper is available, use `references/fallback-rules.md` for its part** and keep going.
+   Never block the user's design task on setup.
+5. Load `design-orchestrator` (bundled with this plugin; it may be listed as
+   `distinctive-ui:design-orchestrator`). If the user has their own `design-orchestrator`, theirs wins.
+6. Follow its routing:
    - **Web / SaaS / PWA / dashboards** → `ui-ux-pro-max` leads (tokens, layout, palettes, type,
      UX rules); `apple-design` is a review layer only (accessibility, hierarchy, clarity, craft).
    - **iOS / macOS / React Native / Flutter / Tauri window chrome** → `apple-design` leads;
      `ui-ux-pro-max` for visual exploration.
-3. **If a helper skill is missing**, say so once ("ui-ux-pro-max isn't installed — run
-   `/distinctive-ui:setup` to add it; continuing with the built-in rules") and use
-   `references/fallback-rules.md` for that part. Never block the user's task on setup.
-4. Treat helper output as input, not a verdict. Keyword-matching generators can suggest the wrong
-   genre — for example a luxury-portfolio look with display serifs for a quoting tool used ten
-   hours a day. Say what you took, what you overrode, and why, in one line.
+7. Treat helper output as input, not a verdict. Keyword-matching generators can suggest the wrong
+   genre — for example a luxury-portfolio look with display serifs for a quoting tool used ten hours a
+   day. Say what you took, what you overrode, and why, in one line.
 
 ## Pace and hard rules
 
@@ -130,5 +141,6 @@ the same design language.
   anti-template checklist, token documentation pattern.
 - `references/verification.md` — driving `scripts/shoot.mjs`, flow-test gotchas, handover template.
 - `references/fallback-rules.md` — compact UX/accessibility rules used when a helper skill is missing.
+- `scripts/check-helpers.mjs` — read-only detection of which helper skills the user already has.
 - `references/example-quoting-tool.md` — a worked example of what "distinctive" meant on a real
   project. Read it for calibration; don't copy its look.

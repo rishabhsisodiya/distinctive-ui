@@ -15,13 +15,13 @@
     {
       "name": "ui-ux-pro-max",
       "source": { "source": "github", "repo": "nextlevelbuilder/ui-ux-pro-max-skill" },
-      "description": "Third-party (MIT, by nextlevelbuilder): searchable UI/UX design system data — styles, palettes, font pairings, UX rules, stack guides. Installed from its own repository.",
+      "description": "Third-party (MIT, by nextlevelbuilder): searchable UI/UX design system data — styles, palettes, font pairings, UX rules, stack guides. Optional helper, installed from its own repository only if you don't already have it.",
       "category": "design"
     },
     {
       "name": "apple-design",
       "source": { "source": "github", "repo": "dickwu/apple-design-skill" },
-      "description": "Third-party (by dickwu): Apple Human Interface Guidelines reviewer and design-craft lens. Installed from its own repository.",
+      "description": "Third-party (by dickwu): Apple Human Interface Guidelines reviewer and design-craft lens. Optional helper, installed from its own repository only if you don't already have it.",
       "category": "design"
     }
   ]

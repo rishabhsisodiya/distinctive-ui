@@ -20,7 +20,8 @@ intake → brief → three art directions → build → real-browser review → 
 - **Tells you the truth at handover**: what was tested, what wasn't, which assumptions are open,
   and what your backend must provide.
 
-It routes design decisions through two well-known skills, which install automatically:
+It routes design decisions through two well-known skills, which it **detects first** and only offers to
+install if you don't already have them:
 
 | Skill | Role | Author |
 |---|---|---|
@@ -28,9 +29,9 @@ It routes design decisions through two well-known skills, which install automati
 | [apple-design](https://github.com/dickwu/apple-design-skill) | Apple HIG reviewer and craft lens. Leads on iOS/macOS, reviews on web | dickwu |
 | design-orchestrator | decides which of the two leads, and settles conflicts. Bundled here | this repo |
 
-The two third-party skills are fetched from their own repositories, not copied into this one.
-Note: the `ui-ux-pro-max` plugin also adds its companion skills: `brand`, `design`,
-`design-system`, `ui-styling`, `banner-design` and `slides`.
+The two third-party skills are never copied into this repo. If you want them, they're installed from
+their own repositories. Note: the `ui-ux-pro-max` plugin also adds its companion skills: `brand`,
+`design`, `design-system`, `ui-styling`, `banner-design` and `slides`.
 
 ## Install
 
@@ -48,25 +49,26 @@ claude plugin marketplace add rishabhsisodiya/distinctive-ui
 claude plugin install distinctive-ui@distinctive-ui
 ```
 
-Installing `distinctive-ui` also installs its two dependencies, `ui-ux-pro-max` and `apple-design`,
-from the same marketplace. Then check everything in one step:
+Then run the setup check once:
 
 ```
 /distinctive-ui:setup
 ```
 
-It confirms the helper skills are present, checks Node 22+, Python 3 and Chrome, and offers to
-install anything missing. It asks before installing anything.
+It looks for `ui-ux-pro-max` and `apple-design` in your personal skills folder, your project, and your
+installed plugins. **Anything you already have is left alone.** It offers to install only what's
+missing, one at a time, and asks first. (If you skip setup, the skill runs the same check the first
+time you ask for a design and asks then.)
 
 ### Requirements
 
 | Needed for | Requirement |
 |---|---|
-| The plugin | Claude Code with plugin support (dependencies need a recent version; run `claude update`) |
+| The plugin | Claude Code with plugin support (run `claude update` if `/plugin` is missing) |
 | Browser review (Phase 5) | Node.js 22+ and Google Chrome or Chromium (or set `CHROME=/path/to/chrome`) |
 | ui-ux-pro-max search scripts | Python 3 |
 
-Missing pieces don't block you. Without a helper skill, the workflow uses built-in fallback rules.
+Missing pieces don't block you. If you decline a helper skill, the workflow uses built-in fallback rules.
 Without a browser, it reviews the code and asks you for screenshots.
 
 ## Use
@@ -85,38 +87,37 @@ as an ASSUMPTION. Say **"just build it"** and it runs the remaining build steps 
 ## What's inside
 
 ```
-.claude-plugin/marketplace.json          catalogue: distinctive-ui + its two dependencies
+.claude-plugin/marketplace.json          catalogue: distinctive-ui + the two optional helper skills
 plugins/distinctive-ui/
-├── .claude-plugin/plugin.json           manifest, declares the dependencies
+├── .claude-plugin/plugin.json           manifest
 └── skills/
     ├── distinctive-ui/                  the workflow
     │   ├── SKILL.md
     │   ├── references/                  intake, directions, verification, fallback rules, worked example
-    │   └── scripts/shoot.mjs            headless-Chrome screenshots + flow tests (no npm install)
+    │   └── scripts/                     check-helpers.mjs (detect helpers), shoot.mjs (headless-Chrome review)
     ├── design-orchestrator/SKILL.md     routes between ui-ux-pro-max and apple-design
     └── setup/SKILL.md                   /distinctive-ui:setup
 ```
 
-## Already keep skills in `~/.claude/skills/`?
+## Already have the helper skills?
 
-You can use the workflow without the plugin system:
+You don't need to do anything. The check finds copies in `~/.claude/skills/`, in your project's
+`.claude/skills/`, or installed as plugins, and won't install a second one. If you also have your own
+`design-orchestrator`, yours is preferred.
+
+Not using the plugin system at all? Copy the skills by hand:
 
 ```bash
 git clone https://github.com/rishabhsisodiya/distinctive-ui.git
 cp -r distinctive-ui/plugins/distinctive-ui/skills/distinctive-ui ~/.claude/skills/
 cp -r distinctive-ui/plugins/distinctive-ui/skills/design-orchestrator ~/.claude/skills/
-git clone https://github.com/dickwu/apple-design-skill.git ~/.claude/skills/apple-design
-npx ui-ux-pro-max-cli init --ai claude   # inside your project
 ```
-
-If you already have your own `design-orchestrator`, keep yours. The workflow prefers it.
 
 ## Update and uninstall
 
 ```
 /plugin marketplace update distinctive-ui
 /plugin uninstall distinctive-ui@distinctive-ui
-claude plugin prune     # removes dependencies nothing else needs
 ```
 
 ## Contributing

@@ -1,9 +1,9 @@
 ---
 name: setup
 description: >
-  Check and finish the distinctive-ui setup: confirms the ui-ux-pro-max and apple-design skills are
-  installed, and that Node 22+, Python 3 and Chrome are available for the visual-review step.
-  Offers to install anything missing, with the user's permission. Run with /distinctive-ui:setup.
+  Check and finish the distinctive-ui setup: detects whether the ui-ux-pro-max and apple-design skills
+  are already available (personal, project or plugin), and that Node 22+, Python 3 and Chrome are available for the visual-review step.
+  Offers to install only what is missing, with the user's permission. Run with /distinctive-ui:setup.
 disable-model-invocation: true
 ---
 
@@ -14,7 +14,10 @@ Never install anything without asking first — each install changes the user's 
 
 ## 1. Check the helper skills
 
-Look at the skills available in this session for each of these (with or without a plugin prefix):
+Run `node <base directory of the distinctive-ui skill>/scripts/check-helpers.mjs` (read-only; the
+distinctive-ui skill's folder sits next to this one, under `skills/distinctive-ui/scripts/`). It prints
+where each helper was found: personal skills folder, project skills folder, or an enabled plugin.
+Cross-check the session's skill list too — a listed helper counts as available.
 
 | Skill | Used for | Where it comes from |
 |---|---|---|
@@ -22,20 +25,16 @@ Look at the skills available in this session for each of these (with or without 
 | `ui-ux-pro-max` | design-system data: styles, palettes, fonts, UX rules (MIT, by nextlevelbuilder) | github.com/nextlevelbuilder/ui-ux-pro-max-skill |
 | `apple-design` | Apple HIG review + craft lens (by dickwu) | github.com/dickwu/apple-design-skill |
 
-If the user installed `distinctive-ui` from its marketplace, Claude Code normally installs the two
-third-party plugins automatically as dependencies. If they are missing anyway (older Claude Code,
-install interrupted, plugin disabled), offer the fix that matches how the user works:
+**Only offer to install what is genuinely missing.** A helper the user already has — in
+`~/.claude/skills/`, in the project, or as a plugin — is ready; say so and leave it alone, so they
+never end up with two copies.
 
-**Plugin route (recommended)** — the user types these in Claude Code:
+For each missing helper, ask once and install only after a clear yes:
 
-```
-/plugin install ui-ux-pro-max@distinctive-ui
-/plugin install apple-design@distinctive-ui
-/reload-plugins
-```
-
-or, from a terminal: `claude plugin install ui-ux-pro-max@distinctive-ui` and
-`claude plugin install apple-design@distinctive-ui`.
+**Plugin route (recommended)** — run the script's `installCommand`, which is
+`claude plugin install <name>@distinctive-ui` (it adds the marketplace first if needed), then ask the
+user to type `/reload-plugins`. You may run these terminal commands once the user says yes;
+slash commands like `/plugin install` must be typed by the user.
 
 **Skills-folder route** — for users who keep skills in `~/.claude/skills/` instead of plugins:
 
@@ -44,8 +43,8 @@ git clone https://github.com/dickwu/apple-design-skill.git ~/.claude/skills/appl
 npx ui-ux-pro-max-cli init --ai claude      # run inside the project; installs .claude/skills/ui-ux-pro-max
 ```
 
-You may run the terminal commands yourself only after the user says yes. Slash commands such as
-`/plugin install` must be typed by the user.
+If the user declines a helper, that is fine: the workflow falls back to its built-in rules for that
+part (`references/fallback-rules.md` in the distinctive-ui skill).
 
 ## 2. Check the tools
 

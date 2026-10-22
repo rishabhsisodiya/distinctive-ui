@@ -22,7 +22,7 @@ without a prefix. Use whichever is in your skill list.
 ## Step 0 — Check what is available
 
 Look at the available skills. If one or both are missing, say so in one line, suggest
-`/distinctive-ui:setup`, and carry on: use the one that is present for its own part of the table
+`/distinctive-ui:setup` (it detects what you already have and installs only what's missing), and carry on: use the one that is present for its own part of the table
 below, and for the missing part fall back to `references/fallback-rules.md` in the
 `distinctive-ui` skill. Do not stop the user's task just because a helper skill is absent.
 
