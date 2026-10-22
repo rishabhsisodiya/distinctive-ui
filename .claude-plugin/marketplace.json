@@ -1,0 +1,28 @@
+{
+  "name": "distinctive-ui",
+  "description": "A creative-director workflow for Claude Code that designs interfaces with an identity of their own, plus the design skills it builds on.",
+  "owner": {
+    "name": "Rishabh Sisodiya",
+    "url": "https://github.com/rishabhsisodiya"
+  },
+  "plugins": [
+    {
+      "name": "distinctive-ui",
+      "source": "./plugins/distinctive-ui",
+      "description": "Intake → brief → three art directions → build → real-browser review → honest handover. Routes to ui-ux-pro-max and apple-design.",
+      "category": "design"
+    },
+    {
+      "name": "ui-ux-pro-max",
+      "source": { "source": "github", "repo": "nextlevelbuilder/ui-ux-pro-max-skill" },
+      "description": "Third-party (MIT, by nextlevelbuilder): searchable UI/UX design system data — styles, palettes, font pairings, UX rules, stack guides. Installed from its own repository.",
+      "category": "design"
+    },
+    {
+      "name": "apple-design",
+      "source": { "source": "github", "repo": "dickwu/apple-design-skill" },
+      "description": "Third-party (by dickwu): Apple Human Interface Guidelines reviewer and design-craft lens. Installed from its own repository.",
+      "category": "design"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "name": "distinctive-ui",
+  "displayName": "Distinctive UI",
+  "version": "1.0.0",
+  "description": "Creative-director workflow that designs interfaces which could only belong to your product: intake, brief, three art directions, build, real-browser visual review and an honest handover. Routes to ui-ux-pro-max and apple-design.",
+  "author": {
+    "name": "Rishabh Sisodiya",
+    "url": "https://github.com/rishabhsisodiya"
+  },
+  "homepage": "https://github.com/rishabhsisodiya/distinctive-ui",
+  "repository": "https://github.com/rishabhsisodiya/distinctive-ui",
+  "license": "MIT",
+  "keywords": ["design", "ui", "ux", "prototype", "art-direction", "design-system", "frontend"],
+  "dependencies": ["ui-ux-pro-max", "apple-design"]
+}
